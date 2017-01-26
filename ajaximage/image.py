@@ -44,3 +44,9 @@ def resize(file_, max_width=0, max_height=0, crop=0):
     temp.seek(0)
 
     return SimpleUploadedFile(file_.name, temp.read(), content_type=file_.content_type)
+
+
+def get_sizes(file_):
+    with Image.open(file_) as im:
+        width, height = im.size
+    return width, height

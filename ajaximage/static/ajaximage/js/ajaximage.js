@@ -112,6 +112,9 @@
                 case 403:
                     error(el, data.error)
                     break;
+                case 405:
+                    error(el, data.error)
+                    break;
                 default:
                     error(el, 'Sorry, could not upload image.')
             }
