@@ -33,8 +33,8 @@ def ajaximage(request, upload_to=None, max_width=None, max_height=None, crop=Non
 
         width, height = get_sizes(file_)
 
-        if (valid_width and valid_width != width) or (valid_height and valid_height != height):
-            data = json.dumps({'error': 'Bad image size.'})
+        if (valid_width and int(valid_width) != width) or (valid_height and int(valid_height) != height):
+            data = json.dumps({'error': 'Bad image size: %sx%s is required' % (valid_width or '', valid_height or '')})
             return HttpResponse(data, content_type="application/json", status=405)
 
         file_ = resize(file_, max_width, max_height, crop)
