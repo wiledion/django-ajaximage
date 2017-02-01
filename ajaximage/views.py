@@ -39,7 +39,7 @@ def ajaximage(request, upload_to=None, max_width=None, max_height=None, crop=Non
             data = json.dumps({'error': 'Bad image size: %sx%s is required' % (valid_width, valid_height)})
             return HttpResponse(data, content_type="application/json", status=405)
         elif max_bytes and bytes_size > max_bytes:
-            data = json.dumps({'error': 'File is bigger than {:.2f} Mb'.format(float(max_bytes)/1024*1024)})
+            data = json.dumps({'error': 'File is bigger than {:.2f} Mb'.format(float(max_bytes)/1048576)})
             return HttpResponse(data, content_type="application/json", status=405)
 
         file_ = resize(file_, max_width, max_height, crop)
