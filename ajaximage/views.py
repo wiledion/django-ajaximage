@@ -20,7 +20,7 @@ FILENAME_NORMALIZER = getattr(settings, 'AJAXIMAGE_FILENAME_NORMALIZER', slugify
 @require_POST
 @user_passes_test(AUTH_TEST)
 def ajaximage(request, upload_to=None, max_width=None, max_height=None, crop=None, form_class=FileForm,
-              valid_width=None, valid_height=None):
+              valid_width=None, valid_height=None, max_bytes=None):
     form = form_class(request.POST, request.FILES)
     if form.is_valid():
         file_ = form.cleaned_data['file']
@@ -32,11 +32,14 @@ def ajaximage(request, upload_to=None, max_width=None, max_height=None, crop=Non
             data = json.dumps({'error': 'Bad image format.'})
             return HttpResponse(data, content_type="application/json", status=403)
 
-        valid_width, valid_height = int(valid_width or 0), int(valid_height or 0)
-        width, height = get_sizes(ContentFile(file_ .read()))
+        valid_width, valid_height, max_bytes = int(valid_width), int(valid_height), float(max_bytes)
+        width, height, bytes_size = get_sizes(ContentFile(file_ .read()))
 
         if (valid_width and valid_width != width) or (valid_height and valid_height != height):
             data = json.dumps({'error': 'Bad image size: %sx%s is required' % (valid_width, valid_height)})
+            return HttpResponse(data, content_type="application/json", status=405)
+        elif max_bytes and bytes_size > max_bytes:
+            data = json.dumps({'error': 'File is bigger than {:.2f} Mb'.format(float(max_bytes)/1048576)})
             return HttpResponse(data, content_type="application/json", status=405)
 
         file_ = resize(file_, max_width, max_height, crop)

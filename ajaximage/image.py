@@ -49,4 +49,4 @@ def resize(file_, max_width=0, max_height=0, crop=0):
 def get_sizes(file_):
     with Image.open(file_) as im:
         width, height = im.size
-    return width, height
+    return width, height, file_.size

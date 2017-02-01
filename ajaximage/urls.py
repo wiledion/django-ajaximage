@@ -6,7 +6,7 @@ except ImportError:
 urlpatterns = patterns(
     '',
     url(
-        '^upload/(?P<upload_to>.*)/(?P<max_width>\d+)/(?P<max_height>\d+)/(?P<crop>\d+)/(?P<valid_width>\d+)/(?P<valid_height>\d+)',
+        '^upload/(?P<upload_to>.*)/(?P<max_width>\d+)/(?P<max_height>\d+)/(?P<crop>\d+)/(?P<valid_width>\d+)/(?P<valid_height>\d+)/(?P<max_bytes>\d+)',
         'ajaximage.views.ajaximage',
         name='ajaximage'
     ),

@@ -50,6 +50,7 @@ class AjaxImageWidget(widgets.TextInput):
                   'max_height': self.max_height,
                   'valid_width': self.validation.get('width', 0),
                   'valid_height': self.validation.get('height', 0),
+                  'max_bytes': self.validation.get('max_bytes', 0),
                   'crop': self.crop}
 
         upload_url = reverse('ajaximage', kwargs=kwargs)
