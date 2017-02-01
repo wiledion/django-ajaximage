@@ -110,8 +110,6 @@
                     break
                 case 400:
                 case 403:
-                    error(el, data.error)
-                    break;
                 case 405:
                     error(el, data.error)
                     break;
